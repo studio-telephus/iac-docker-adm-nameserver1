@@ -7,6 +7,10 @@ apt-get install -y \
  vim curl wget htop openssh-server unzip gnupg2 netcat-traditional \
  bash-completion
 
+## Run pre-install scripts
+sh /mnt/setup-ca.sh
+
+
 echo "Install the BIND DNS Server"
 apt-get install -y bind9 bind9utils bind9-doc dnsutils
 

@@ -1,6 +1,6 @@
-module "container_nameserver_1" {
+module "container_adm_nameserver1" {
   source    = "github.com/studio-telephus/tel-iac-modules-lxd.git//container?ref=develop"
-  name      = "container-nameserver1"
+  name      = "container-adm-nameserver1"
   image     = "images:debian/buster"
   profiles  = ["limits", "fs-dir", "nw-adm"]
   autostart = true
@@ -16,11 +16,9 @@ module "container_nameserver_1" {
     "${path.cwd}/filesystem-shared-ca-certificates",
     "${path.cwd}/filesystem",
   ]
-  exec = {
-    enabled     = true
-    entrypoint  = "/mnt/install.sh"
-    environment = {
-      RANDOM_STRING                  = "30b02873-69b7-4e99-b14d-6d4b8493cfa0"
-    }
+  exec_enabled = true
+  exec         = "/mnt/install.sh"
+  environment = {
+    RANDOM_STRING = "30b02873-69b7-4e99-b14d-6d4b8493cfa0"
   }
 }
