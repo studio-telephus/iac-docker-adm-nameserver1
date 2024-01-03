@@ -37,8 +37,8 @@ cat <<EOF >/etc/bind/named.conf.options
 acl "trusted" {
   localhost;
   10.0.10.0/24;
-  10.0.20.0/24;
-  10.0.30.0/24;
+  10.20.0.0/16;
+  10.30.0.0/16;
   193.40.103.103;
 };
 
@@ -79,9 +79,9 @@ zone "dev.acme.corp" {
   file "/etc/bind/zones/db-dev.acme.corp.conf";
 };
 
-zone "20.0.10.in-addr.arpa" {
+zone "0.20.10.in-addr.arpa" {
   type master;
-  file "/etc/bind/zones/db-10.0.20.conf";
+  file "/etc/bind/zones/db-10.20.0.conf";
 };
 
 zone "tst.acme.corp" {
@@ -89,9 +89,9 @@ zone "tst.acme.corp" {
   file "/etc/bind/zones/db-tst.acme.corp.conf";
 };
 
-zone "30.0.10.in-addr.arpa" {
+zone "0.30.10.in-addr.arpa" {
   type master;
-  file "/etc/bind/zones/db-10.0.30.conf";
+  file "/etc/bind/zones/db-10.30.0.conf";
 };
 EOF
 
@@ -108,8 +108,8 @@ echo "Check the forward lookup zone files"
 
 echo "Check the reverse lookup zone files"
 /usr/sbin/named-checkzone 10.0.10.in-addr.arpa /etc/bind/zones/db-10.0.10.conf
-/usr/sbin/named-checkzone 20.0.10.in-addr.arpa /etc/bind/zones/db-10.0.20.conf
-/usr/sbin/named-checkzone 30.0.10.in-addr.arpa /etc/bind/zones/db-10.0.30.conf
+/usr/sbin/named-checkzone 0.20.10.in-addr.arpa /etc/bind/zones/db-10.20.0.conf
+/usr/sbin/named-checkzone 0.30.10.in-addr.arpa /etc/bind/zones/db-10.30.0.conf
 
 echo "Set file permissions to manually created files"
 #chown -R bind:bind /etc/bind
