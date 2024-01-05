@@ -57,8 +57,8 @@ options {
     8.8.4.4;
   };
 
-	dnssec-validation auto;
-	listen-on-v6 { any; };
+  dnssec-validation auto;
+  listen-on-v6 { any; };
 };
 EOF
 
@@ -79,9 +79,9 @@ zone "dev.acme.corp" {
   file "/etc/bind/zones/db-dev.acme.corp.conf";
 };
 
-zone "0.20.10.in-addr.arpa" {
+zone "20.10.in-addr.arpa" {
   type master;
-  file "/etc/bind/zones/db-10.20.0.conf";
+  file "/etc/bind/zones/db-10.20.conf";
 };
 
 zone "tst.acme.corp" {
@@ -89,9 +89,9 @@ zone "tst.acme.corp" {
   file "/etc/bind/zones/db-tst.acme.corp.conf";
 };
 
-zone "0.30.10.in-addr.arpa" {
+zone "30.10.in-addr.arpa" {
   type master;
-  file "/etc/bind/zones/db-10.30.0.conf";
+  file "/etc/bind/zones/db-10.30.conf";
 };
 EOF
 
@@ -108,8 +108,8 @@ echo "Check the forward lookup zone files"
 
 echo "Check the reverse lookup zone files"
 /usr/sbin/named-checkzone 10.0.10.in-addr.arpa /etc/bind/zones/db-10.0.10.conf
-/usr/sbin/named-checkzone 0.20.10.in-addr.arpa /etc/bind/zones/db-10.20.0.conf
-/usr/sbin/named-checkzone 0.30.10.in-addr.arpa /etc/bind/zones/db-10.30.0.conf
+/usr/sbin/named-checkzone 20.10.in-addr.arpa /etc/bind/zones/db-10.20.conf
+/usr/sbin/named-checkzone 30.10.in-addr.arpa /etc/bind/zones/db-10.30.conf
 
 echo "Set file permissions to manually created files"
 #chown -R bind:bind /etc/bind
@@ -125,3 +125,7 @@ dig -x 10.0.10.101
 echo "Confirm DNS server name resolution"
 nslookup nameserver1.adm.acme.corp
 nslookup 10.0.10.101
+
+echo "Confirm DNS server name resolution"
+nslookup i18n.iam.dev.acme.corp
+nslookup 10.20.0.32
