@@ -98,6 +98,13 @@ EOF
 echo "List files in /etc/bind"
 ls -lah /etc/bind
 
+sh /etc/bind/zones/db-10.0.10.sh
+sh /etc/bind/zones/db-10.20.sh
+sh /etc/bind/zones/db-10.30.sh
+sh /etc/bind/zones/db-adm.acme.corp.sh
+sh /etc/bind/zones/db-dev.acme.corp.sh
+sh /etc/bind/zones/db-tst.acme.corp.sh
+
 echo "Verify the configuration for any errors"
 /usr/sbin/named-checkconf
 
