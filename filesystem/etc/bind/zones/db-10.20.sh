@@ -23,7 +23,7 @@ cat <<EOF >/etc/bind/zones/db-10.20.conf
 32.0 IN PTR hub-api.iam.dev.acme.corp.
 32.0 IN PTR pap-ui.iam.dev.acme.corp.
 32.0 IN PTR pap-api.iam.dev.acme.corp.
-32.0 IN PTR dashboard.k3s.dev.acme.corp.
+32.0 IN PTR dashboard.iam.dev.acme.corp.
 32.0 IN PTR kubernetes-dashboard.k3s.dev.acme.corp.
 32.0 IN PTR grafana.k3s.dev.acme.corp.
 32.0 IN PTR longhorn.k3s.dev.acme.corp.

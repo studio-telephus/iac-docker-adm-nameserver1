@@ -24,7 +24,7 @@ hub-ui.iam.dev.acme.corp.                 IN A 10.20.0.32
 hub-api.iam.dev.acme.corp.                IN A 10.20.0.32
 pap-ui.iam.dev.acme.corp.                 IN A 10.20.0.32
 pap-api.iam.dev.acme.corp.                IN A 10.20.0.32
-dashboard.k3s.dev.acme.corp.              IN A 10.20.0.32
+dashboard.iam.dev.acme.corp.              IN A 10.20.0.32
 kubernetes-dashboard.k3s.dev.acme.corp.   IN A 10.20.0.32
 grafana.k3s.dev.acme.corp.                IN A 10.20.0.32
 longhorn.k3s.dev.acme.corp.               IN A 10.20.0.32
