@@ -1,19 +1,14 @@
-FROM bash:4.4
-
-COPY ./filesystem /tmp/delta/.
-COPY ./filesystem-shared-ca-certificates /tmp/delta/.
-RUN cp -R /tmp/delta/* /
-RUN rm -Rf /tmp/delta
-
 FROM debian:bookworm-slim
 
-RUN echo "tere 2"
+COPY ./filesystem /.
+COPY ./filesystem-shared-ca-certificates /.
 
 RUN find /mnt -print
 
-# COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# RUN /mnt/install.sh
+RUN set -x
+RUN bash /mnt/pre-install.sh
+RUN bash /mnt/install.sh
+RUN bash /mnt/supervisor.sh
 
 EXPOSE 53
 

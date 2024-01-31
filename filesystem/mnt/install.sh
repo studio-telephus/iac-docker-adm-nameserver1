@@ -1,16 +1,5 @@
 #!/usr/bin/env bash
 
-echo "Install the base tools"
-
-apt-get update
-apt-get install -y \
- vim curl wget htop unzip gnupg2 netcat-traditional \
- bash-completion openssl net-tools supervisor
-
-## Run pre-install scripts
-sh /mnt/setup-ca.sh
-
-
 echo "Install the BIND DNS Server"
 apt-get install -y bind9 bind9utils bind9-doc dnsutils
 
@@ -121,12 +110,3 @@ named-checkzone 30.10.in-addr.arpa /etc/bind/zones/db-10.30.conf
 echo "Set file permissions to manually created files"
 chown -R bind:bind /etc/bind/zones
 #chmod -R 644 /etc/bind/zones
-
-echo "Configure supervisor"
-cat <<EOF > /etc/supervisor/conf.d/supervisord.conf
-[supervisord]
-nodaemon=true
-
-[program:named]
-command=/usr/sbin/named -c /etc/bind/named.conf -u bind -f
-EOF
