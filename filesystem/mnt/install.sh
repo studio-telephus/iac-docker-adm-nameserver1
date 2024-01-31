@@ -36,7 +36,7 @@ EOF
 cat <<EOF >/etc/bind/named.conf.options
 acl "trusted" {
   localhost;
-  10.0.10.0/24;
+  10.10.0.0/16;
   10.20.0.0/16;
   10.30.0.0/16;
   193.40.103.103;
@@ -48,7 +48,7 @@ options {
   recursion yes;                 # enables resursive queries
   allow-recursion { trusted; };  # allows recursive queries from "trusted" clients
   listen-on {
-    10.0.10.101; # ns1 private IP address - listen on private network only
+    10.10.0.101; # ns1 private IP address - listen on private network only
   };
   allow-transfer { none; };      # disable zone transfers by default
 
@@ -69,9 +69,9 @@ zone "adm.acme.corp" {
   file "/etc/bind/zones/db-adm.acme.corp.conf";
 };
 
-zone "10.0.10.in-addr.arpa" {
+zone "10.10.in-addr.arpa" {
   type master;
-  file "/etc/bind/zones/db-10.0.10.conf";
+  file "/etc/bind/zones/db-10.10.conf";
 };
 
 zone "dev.acme.corp" {
@@ -98,7 +98,7 @@ EOF
 echo "List files in /etc/bind"
 ls -lah /etc/bind
 
-sh /etc/bind/zones/db-10.0.10.sh
+sh /etc/bind/zones/db-10.10.sh
 sh /etc/bind/zones/db-10.20.sh
 sh /etc/bind/zones/db-10.30.sh
 sh /etc/bind/zones/db-adm.acme.corp.sh
@@ -114,7 +114,7 @@ echo "Check the forward lookup zone files"
 /usr/sbin/named-checkzone tst.acme.corp /etc/bind/zones/db-tst.acme.corp.conf
 
 echo "Check the reverse lookup zone files"
-/usr/sbin/named-checkzone 10.0.10.in-addr.arpa /etc/bind/zones/db-10.0.10.conf
+/usr/sbin/named-checkzone 10.10.in-addr.arpa /etc/bind/zones/db-10.10.conf
 /usr/sbin/named-checkzone 20.10.in-addr.arpa /etc/bind/zones/db-10.20.conf
 /usr/sbin/named-checkzone 30.10.in-addr.arpa /etc/bind/zones/db-10.30.conf
 
@@ -126,13 +126,17 @@ echo "Restart BIND to implement the changes"
 systemctl restart bind9
 
 echo "Test the DNS server by performing a forward & reverse lookup query"
-dig nameserver1.adm.acme.corp
-dig -x 10.0.10.101
+dig nameserver1.docker.adm.acme.corp
+dig -x 10.10.0.101
 
-echo "Confirm DNS server name resolution"
-nslookup nameserver1.adm.acme.corp
-nslookup 10.0.10.101
+echo "Confirm DNS server name resolution for adm"
+nslookup nameserver1.docker.adm.acme.corp
+nslookup 10.10.0.101
 
-echo "Confirm DNS server name resolution"
+echo "Confirm DNS server name resolution for dev"
+nslookup i18n.iam.dev.acme.corp
+nslookup 10.20.0.32
+
+echo "Confirm DNS server name resolution for tst"
 nslookup i18n.iam.dev.acme.corp
 nslookup 10.20.0.32

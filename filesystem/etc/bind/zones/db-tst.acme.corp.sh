@@ -3,7 +3,7 @@ cat <<EOF >/etc/bind/zones/db-tst.acme.corp.conf
 ; BIND data file for local loopback interface
 ;
 \$TTL    604800
-@       IN      SOA     nameserver1.adm.acme.corp. root.nameserver1.adm.acme.corp. (
+@       IN      SOA     nameserver1.docker.adm.acme.corp. root.nameserver1.docker.adm.acme.corp. (
                            6004         ; Serial
                              1D         ; Refresh
                              1H         ; Retry
@@ -12,9 +12,9 @@ cat <<EOF >/etc/bind/zones/db-tst.acme.corp.conf
 ;
 
 ; name servers - NS records
- IN  NS  nameserver1.adm.acme.corp.
+ IN  NS  nameserver1.docker.adm.acme.corp.
 
-; 10.30.0.0/16 - A records
+; 10.30.0.0/24 - A records
 
 slb.k3s.tst.acme.corp.                    IN A 10.30.0.31
 alb.k3s.tst.acme.corp.                    IN A 10.30.0.32

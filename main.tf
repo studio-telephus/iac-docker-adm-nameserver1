@@ -1,20 +1,20 @@
+data "docker_image" "debian_bookworm" {
+  name = "debian:bookworm"
+}
+
 module "container_adm_nameserver1" {
-  source    = "github.com/studio-telephus/tel-iac-modules-lxd.git//container?ref=develop"
-  name      = "container-adm-nameserver1"
-  image     = "images:debian/buster"
-  profiles  = ["limits", "fs-dir", "nw-adm"]
-  autostart = true
-  nic = {
-    name = "eth0"
-    properties = {
-      nictype        = "bridged"
-      parent         = "adm-network"
-      "ipv4.address" = "10.0.10.101"
+  source = "github.com/studio-telephus/terraform-docker-container.git?ref=1.0.0"
+  name   = "container-adm-nameserver1"
+  image  = data.docker_image.debian_bookworm.id
+  networks_advanced = [
+    {
+      name         = "adm-docker"
+      ipv4_address = "10.10.0.101"
     }
-  }
-  mount_dirs = [
-    "${path.cwd}/filesystem-shared-ca-certificates",
-    "${path.cwd}/filesystem",
+  ]
+  upload_dirs = [
+    "${path.module}/filesystem",
+    "${path.module}/filesystem-shared-ca-certificates"
   ]
   exec_enabled = true
   exec         = "/mnt/install.sh"
