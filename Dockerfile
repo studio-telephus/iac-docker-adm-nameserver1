@@ -7,6 +7,7 @@ RUN find /mnt -print
 
 RUN set -x
 RUN bash /mnt/pre-install.sh
+RUN bash /mnt/setup-ca.sh
 RUN bash /mnt/install.sh
 RUN bash /mnt/supervisor.sh
 

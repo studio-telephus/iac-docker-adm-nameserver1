@@ -17,7 +17,7 @@ resource "docker_image" "nameserver" {
 module "container_adm_nameserver1" {
   source = "github.com/studio-telephus/terraform-docker-container.git?ref=1.0.1"
   name   = local.container_name
-  image  = docker_image.nameserver.id
+  image  = docker_image.nameserver.image_id
   networks_advanced = [
     {
       name         = "adm-docker"
