@@ -130,23 +130,3 @@ nodaemon=true
 [program:named]
 command=/usr/sbin/named -c /etc/bind/named.conf -u bind -f
 EOF
-
-service supervisor start
-
-## Testing
-
-echo "Test the DNS server by performing a forward & reverse lookup query"
-dig nameserver1.docker.adm.acme.corp
-dig -x 10.10.0.101
-
-echo "Confirm DNS server name resolution for adm"
-nslookup nameserver1.docker.adm.acme.corp
-nslookup 10.10.0.101
-
-echo "Confirm DNS server name resolution for dev"
-nslookup i18n.iam.dev.acme.corp
-nslookup 10.20.0.32
-
-echo "Confirm DNS server name resolution for tst"
-nslookup i18n.iam.dev.acme.corp
-nslookup 10.20.0.32
