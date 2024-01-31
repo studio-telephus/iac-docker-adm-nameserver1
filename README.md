@@ -6,9 +6,23 @@ that can be used by our servers to resolve private hostnames and private IP addr
 This provides a central way to manage our internal hostnames and private IP addresses, 
 which is indispensable when the environment expands to more than a few hosts.
 
-## LXC server
+## Testing
 
-Install through TF
+    echo "Test the DNS server by performing a forward & reverse lookup query"
+    dig nameserver1.docker.adm.acme.corp
+    dig -x 10.10.0.101
+    
+    echo "Confirm DNS server name resolution for adm"
+    nslookup nameserver1.docker.adm.acme.corp
+    nslookup 10.10.0.101
+    
+    echo "Confirm DNS server name resolution for dev"
+    nslookup i18n.iam.dev.acme.corp
+    nslookup 10.20.0.32
+    
+    echo "Confirm DNS server name resolution for tst"
+    nslookup i18n.iam.dev.acme.corp
+    nslookup 10.20.0.32
 
 ## Host
 

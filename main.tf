@@ -3,7 +3,7 @@ data "docker_image" "debian_bookworm" {
 }
 
 module "container_adm_nameserver1" {
-  source = "github.com/studio-telephus/terraform-docker-container.git?ref=1.0.0"
+  source = "github.com/studio-telephus/terraform-docker-container.git?ref=1.0.1"
   name   = "container-adm-nameserver1"
   image  = data.docker_image.debian_bookworm.id
   networks_advanced = [
@@ -21,4 +21,5 @@ module "container_adm_nameserver1" {
   environment = {
     RANDOM_STRING = "30b02873-69b7-4e99-b14d-6d4b8493cfa0"
   }
+  command = ["supervisord"]
 }
