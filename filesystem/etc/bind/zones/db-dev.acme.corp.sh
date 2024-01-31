@@ -18,14 +18,14 @@ cat <<EOF >/etc/bind/zones/db-dev.acme.corp.conf
 
 slb.k3s.dev.acme.corp.                    IN A 10.20.0.31
 alb.k3s.dev.acme.corp.                    IN A 10.20.0.32
-i18n.iam.dev.acme.corp.                   IN A 10.20.0.32
-access.iam.dev.acme.corp.                 IN A 10.20.0.32
-hub-ui.iam.dev.acme.corp.                 IN A 10.20.0.32
-hub-api.iam.dev.acme.corp.                IN A 10.20.0.32
-pap-ui.iam.dev.acme.corp.                 IN A 10.20.0.32
-pap-api.iam.dev.acme.corp.                IN A 10.20.0.32
-dashboard.iam.dev.acme.corp.              IN A 10.20.0.32
-kubernetes-dashboard.k3s.dev.acme.corp.   IN A 10.20.0.32
-grafana.k3s.dev.acme.corp.                IN A 10.20.0.32
-longhorn.k3s.dev.acme.corp.               IN A 10.20.0.32
+i18n.iam.dev.acme.corp.                   IN A 10.20.0.11
+access.iam.dev.acme.corp.                 IN A 10.20.0.11
+hub-ui.iam.dev.acme.corp.                 IN A 10.20.0.11
+hub-api.iam.dev.acme.corp.                IN A 10.20.0.11
+pap-ui.iam.dev.acme.corp.                 IN A 10.20.0.11
+pap-api.iam.dev.acme.corp.                IN A 10.20.0.11
+dashboard.iam.dev.acme.corp.              IN A 10.20.0.11
+kubernetes-dashboard.k3s.dev.acme.corp.   IN A 10.20.0.11
+grafana.k3s.dev.acme.corp.                IN A 10.20.0.11
+longhorn.k3s.dev.acme.corp.               IN A 10.20.0.11
 EOF
