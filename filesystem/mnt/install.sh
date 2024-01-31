@@ -4,8 +4,8 @@ echo "Install the base tools"
 
 apt-get update
 apt-get install -y \
- vim curl wget htop openssh-server unzip gnupg2 netcat-traditional \
- bash-completion
+ vim curl wget htop unzip gnupg2 netcat-traditional \
+ bash-completion openssl net-tools supervisor
 
 ## Run pre-install scripts
 sh /mnt/setup-ca.sh
@@ -17,7 +17,7 @@ apt-get install -y bind9 bind9utils bind9-doc dnsutils
 #Set BIND to IPv4 mode since our private networking uses IPv4 exclusively.
 #Add “-4” to the end of the OPTIONS parameter. It should look like the following:
 
-cat <<EOF >/etc/default/named
+cat <<EOF > /etc/default/named
 # run resolvconf?
 RESOLVCONF=no
 
@@ -33,7 +33,7 @@ EOF
 #that BIND runs (short for “domain name daemon”).
 #We will start with configuring the options file.
 
-cat <<EOF >/etc/bind/named.conf.options
+cat <<EOF > /etc/bind/named.conf.options
 acl "trusted" {
   localhost;
   10.10.0.0/16;
@@ -63,7 +63,7 @@ options {
 EOF
 
 
-cat <<EOF >/etc/bind/named.conf.local
+cat <<EOF > /etc/bind/named.conf.local
 zone "adm.acme.corp" {
   type master;
   file "/etc/bind/zones/db-adm.acme.corp.conf";
@@ -106,24 +106,34 @@ sh /etc/bind/zones/db-dev.acme.corp.sh
 sh /etc/bind/zones/db-tst.acme.corp.sh
 
 echo "Verify the configuration for any errors"
-/usr/sbin/named-checkconf
+named-checkconf
 
 echo "Check the forward lookup zone files"
-/usr/sbin/named-checkzone adm.acme.corp /etc/bind/zones/db-adm.acme.corp.conf
-/usr/sbin/named-checkzone dev.acme.corp /etc/bind/zones/db-dev.acme.corp.conf
-/usr/sbin/named-checkzone tst.acme.corp /etc/bind/zones/db-tst.acme.corp.conf
+named-checkzone adm.acme.corp /etc/bind/zones/db-adm.acme.corp.conf
+named-checkzone dev.acme.corp /etc/bind/zones/db-dev.acme.corp.conf
+named-checkzone tst.acme.corp /etc/bind/zones/db-tst.acme.corp.conf
 
 echo "Check the reverse lookup zone files"
-/usr/sbin/named-checkzone 10.10.in-addr.arpa /etc/bind/zones/db-10.10.conf
-/usr/sbin/named-checkzone 20.10.in-addr.arpa /etc/bind/zones/db-10.20.conf
-/usr/sbin/named-checkzone 30.10.in-addr.arpa /etc/bind/zones/db-10.30.conf
+named-checkzone 10.10.in-addr.arpa /etc/bind/zones/db-10.10.conf
+named-checkzone 20.10.in-addr.arpa /etc/bind/zones/db-10.20.conf
+named-checkzone 30.10.in-addr.arpa /etc/bind/zones/db-10.30.conf
 
 echo "Set file permissions to manually created files"
-#chown -R bind:bind /etc/bind
+chown -R bind:bind /etc/bind/zones
 #chmod -R 644 /etc/bind/zones
 
-echo "Restart BIND to implement the changes"
-systemctl restart bind9
+echo "Configure supervisor"
+cat <<EOF > /etc/supervisor/conf.d/supervisord.conf
+[supervisord]
+nodaemon=true
+
+[program:named]
+command=/usr/sbin/named -c /etc/bind/named.conf -u bind -f
+EOF
+
+service supervisor start
+
+## Testing
 
 echo "Test the DNS server by performing a forward & reverse lookup query"
 dig nameserver1.docker.adm.acme.corp
