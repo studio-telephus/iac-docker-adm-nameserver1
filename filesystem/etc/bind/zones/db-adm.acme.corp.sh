@@ -24,6 +24,7 @@ nexus.docker.adm.acme.corp.                IN A 10.10.0.120
 gitlab.docker.adm.acme.corp.               IN A 10.10.0.121
 kibana.docker.adm.acme.corp.               IN A 10.10.0.124
 sonarqube.docker.adm.acme.corp.            IN A 10.10.0.125
+sonarproxy.docker.adm.acme.corp.           IN A 10.10.0.126
 ofbiz.docker.adm.acme.corp.                IN A 10.10.0.127
 glrunner-k1.docker.adm.acme.corp.          IN A 10.10.0.130
 glrunner-k2.docker.adm.acme.corp.          IN A 10.10.0.131

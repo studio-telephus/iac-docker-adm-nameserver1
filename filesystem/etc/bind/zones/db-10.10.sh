@@ -21,6 +21,7 @@ cat <<EOF >/etc/bind/zones/db-10.10.conf
 120.0 IN PTR nexus.docker.adm.acme.corp.
 121.0 IN PTR gitlab.docker.adm.acme.corp.
 125.0 IN PTR sonarqube.docker.adm.acme.corp.
+126.0 IN PTR sonarproxy.docker.adm.acme.corp.
 127.0 IN PTR ofbiz.docker.adm.acme.corp.
 130.0 IN PTR glrunner-k1.docker.adm.acme.corp.
 131.0 IN PTR glrunner-k2.docker.adm.acme.corp.
